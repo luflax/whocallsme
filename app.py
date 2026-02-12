@@ -1,10 +1,12 @@
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, url_for
+from werkzeug.middleware.proxy_fix import ProxyFix
 import requests
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_prefix=1)
 
 RAPIDAPI_HOST = "whatsapp-osint4.p.rapidapi.com"
 RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
@@ -91,7 +93,7 @@ def _fetch_tellows(full_number):
     }
 
 
-@app.route("/whocallsme")
+@app.route("/")
 def whocallsme():
     raw = request.args.get("number", "").strip()
     if not raw:

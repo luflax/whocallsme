@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ display_number }}</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <div class="card">
@@ -98,9 +98,11 @@
   <script>
     const DATA = {
       full_number: "{{ full_number }}",
-      post_id: {{ post_id or 'null' }}
+      post_id: {{ post_id or 'null' }},
+      api_whatsapp: "{{ url_for('api_whatsapp') }}",
+      api_comments: "{{ url_for('api_comments') }}"
     };
   </script>
-  <script src="/static/app.js"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

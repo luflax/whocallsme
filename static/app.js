@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadWhatsApp() {
-  fetch("/api/whatsapp?number=" + DATA.full_number)
+  fetch(DATA.api_whatsapp + "?number=" + DATA.full_number)
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var spinner = document.getElementById("wa-spinner");
@@ -45,7 +45,7 @@ function loadWhatsApp() {
 }
 
 function loadComments() {
-  fetch("/api/comments?post_id=" + DATA.post_id)
+  fetch(DATA.api_comments + "?post_id=" + DATA.post_id)
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var spinner = document.getElementById("comments-spinner");
