@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ display_number }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="card">
+
+    <header class="card-header">
+      <span class="phone-icon">📞</span>
+      <h1 class="phone-number">{{ display_number }}</h1>
+    </header>
+
+    <div class="sources-grid">
+
+      <!-- Ligaram-me column -->
+      <section class="source-col">
+        <h2 class="source-title">Ligaram-me</h2>
+        {% if ligaram %}
+          {% if ligaram.tipo %}
+            <div class="row"><span class="label">Tipo</span><span class="value">{{ ligaram.tipo }}</span></div>
+          {% endif %}
+          {% if ligaram.atender %}
+            <div class="row">
+              <span class="label">Atender?</span>
+              <span class="badge {% if ligaram.atender | lower == 'não' %}badge-no{% elif ligaram.atender | lower == 'sim' %}badge-yes{% endif %}">{{ ligaram.atender }}</span>
+            </div>
+          {% endif %}
+          {% if ligaram.burla %}
+            <div class="row">
+              <span class="label">Burla?</span>
+              <span class="{% if ligaram.burla | lower == 'sim' %}burla-yes{% else %}burla-no{% endif %}">{{ ligaram.burla }}</span>
+            </div>
+          {% endif %}
+          {% if ligaram.nome %}
+            <div class="row"><span class="label">Nome</span><span class="value">{{ ligaram.nome }}</span></div>
+          {% endif %}
+          {% if ligaram.trust is not none %}
+            <div class="row trust-row">
+              <span class="trust-badge" style="--trust: {{ ligaram.trust }}%">{{ ligaram.trust }}% Confiável</span>
+            </div>
+          {% endif %}
+        {% else %}
+          <p class="not-found">Não encontrado</p>
+        {% endif %}
+      </section>
+
+      <!-- Tellows column -->
+      <section class="source-col">
+        <h2 class="source-title">Tellows</h2>
+        {% if tellows %}
+          {% if tellows.score %}
+            <div class="row">
+              <span class="label">Score</span>
+              <span class="score score-{{ 'green' if tellows.score <= 3 else ('orange' if tellows.score <= 6 else 'red') }}">{{ tellows.score }}</span>
+            </div>
+          {% endif %}
+          {% if tellows.location %}
+            <div class="row"><span class="label">Oper.</span><span class="value">{{ tellows.location }}</span></div>
+          {% endif %}
+          {% if tellows.caller_types %}
+            <div class="row"><span class="label">Tipo</span><span class="value">{{ tellows.caller_types | join(', ') }}</span></div>
+          {% endif %}
+          {% if tellows.caller_names %}
+            <div class="row"><span class="label">Nome</span><span class="value">{{ tellows.caller_names | join(', ') }}</span></div>
+          {% endif %}
+          {% if tellows.searches %}
+            <div class="row"><span class="label">Pesquisas</span><span class="value">{{ tellows.searches }}</span></div>
+          {% endif %}
+        {% else %}
+          <p class="not-found">Não encontrado</p>
+        {% endif %}
+      </section>
+
+    </div>
+
+    <!-- WhatsApp section -->
+    <section class="section" id="wa-section">
+      <h2 class="section-title">WhatsApp</h2>
+      <div class="spinner" id="wa-spinner"></div>
+      <div id="wa-content" class="hidden"></div>
+    </section>
+
+    <!-- Comments section -->
+    {% if post_id %}
+    <section class="section" id="comments-section">
+      <h2 class="section-title">Comentários</h2>
+      <div class="spinner" id="comments-spinner"></div>
+      <div id="comments-content" class="hidden"></div>
+    </section>
+    {% endif %}
+
+  </div>
+
+  <script>
+    const DATA = {
+      full_number: "{{ full_number }}",
+      post_id: {{ post_id or 'null' }}
+    };
+  </script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
