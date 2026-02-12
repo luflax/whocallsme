@@ -11,4 +11,6 @@ COPY static/ static/
 
 EXPOSE 5000
 
+ENV RAPIDAPI_KEY=""
+
 CMD ["python", "app.py"]

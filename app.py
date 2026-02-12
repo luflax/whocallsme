@@ -1,3 +1,4 @@
+import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from flask import Flask, request, render_template, jsonify
@@ -6,7 +7,7 @@ import requests
 app = Flask(__name__)
 
 RAPIDAPI_HOST = "whatsapp-osint4.p.rapidapi.com"
-RAPIDAPI_KEY = "a250123150msh0ece2d736350e08p10d61ejsn8984d0278382"
+RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 
 
 def normalize_number(raw):

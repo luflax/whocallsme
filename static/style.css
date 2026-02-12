@@ -166,8 +166,9 @@ body {
 /* WhatsApp section */
 .wa-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 .wa-status {
   font-size: 13px;
@@ -176,8 +177,10 @@ body {
 .wa-registered { color: var(--green); }
 .wa-not-registered { color: var(--text-muted); }
 .wa-photo {
-  width: 48px;
-  height: 48px;
+  display: block;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--border);
