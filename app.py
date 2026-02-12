@@ -9,7 +9,6 @@ app = Flask(__name__)
 RAPIDAPI_HOST = "whatsapp-osint4.p.rapidapi.com"
 RAPIDAPI_KEY = os.environ["RAPIDAPI_KEY"]
 
-
 def normalize_number(raw):
     cleaned = re.sub(r"[\s\+\-]", "", raw)
     if cleaned.startswith("351") and len(cleaned) == 12:
