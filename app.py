@@ -151,8 +151,8 @@ def api_comments():
         resp = requests.get(url, timeout=5)
         resp.raise_for_status()
         raw_comments = resp.json()
-    except Exception:
-        return jsonify({"error": "Erro ao carregar"}), 500
+    except Exception as e:
+        return jsonify({"error": "Erro ao carregar", "detail": str(e)}), 500
 
     comments = []
     for c in raw_comments:
@@ -183,8 +183,8 @@ def api_whatsapp():
         resp = requests.get(url, headers=headers, timeout=5)
         resp.raise_for_status()
         data = resp.json()
-    except Exception:
-        return jsonify({"error": "Erro ao carregar"}), 500
+    except Exception as e:
+        return jsonify({"error": "Erro ao carregar", "detail": str(e)}), 500
 
     return jsonify({
         "registered": data.get("registered"),

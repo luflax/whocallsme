@@ -15,7 +15,7 @@ function loadWhatsApp() {
       if (!content) return;
 
       if (data.error) {
-        content.innerHTML = '<span class="error-msg">Erro ao carregar</span>';
+        content.innerHTML = errorHtml(data.detail);
       } else {
         var registered = data.registered;
         var isYes = registered && registered.toLowerCase() === "yes";
@@ -33,12 +33,12 @@ function loadWhatsApp() {
 
       content.classList.remove("hidden");
     })
-    .catch(function () {
+    .catch(function (err) {
       var spinner = document.getElementById("wa-spinner");
       var content = document.getElementById("wa-content");
       if (spinner) spinner.remove();
       if (content) {
-        content.innerHTML = '<span class="error-msg">Erro ao carregar</span>';
+        content.innerHTML = errorHtml(err && err.message);
         content.classList.remove("hidden");
       }
     });
@@ -53,7 +53,9 @@ function loadComments() {
       if (spinner) spinner.remove();
       if (!content) return;
 
-      if (data.error || !Array.isArray(data) || data.length === 0) {
+      if (data.error) {
+        content.innerHTML = errorHtml(data.detail);
+      } else if (!Array.isArray(data) || data.length === 0) {
         content.innerHTML = '<span class="not-found">Sem comentários</span>';
       } else {
         var html = "";
@@ -68,15 +70,24 @@ function loadComments() {
 
       content.classList.remove("hidden");
     })
-    .catch(function () {
+    .catch(function (err) {
       var spinner = document.getElementById("comments-spinner");
       var content = document.getElementById("comments-content");
       if (spinner) spinner.remove();
       if (content) {
-        content.innerHTML = '<span class="error-msg">Erro ao carregar</span>';
+        content.innerHTML = errorHtml(err && err.message);
         content.classList.remove("hidden");
       }
     });
+}
+
+function errorHtml(detail) {
+  var id = "err-detail-" + Math.random().toString(36).slice(2);
+  var detailPart = detail
+    ? ' <a href="#" class="error-detail-link" onclick="var el=document.getElementById(\'' + id + '\');el.style.display=el.style.display===\'none\'?\'inline\':\'none\';return false;">Mostrar detalhes</a>' +
+      '<span id="' + id + '" class="error-detail" style="display:none"> &mdash; ' + escapeHtml(detail) + '</span>'
+    : '';
+  return '<span class="error-msg">Erro ao carregar' + detailPart + '</span>';
 }
 
 function escapeHtml(str) {

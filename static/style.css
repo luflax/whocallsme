@@ -206,3 +206,17 @@ body {
   color: var(--red);
   font-style: italic;
 }
+.error-detail-link {
+  font-size: 11px;
+  color: var(--red);
+  opacity: 0.75;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 4px;
+}
+.error-detail {
+  font-size: 11px;
+  color: var(--red);
+  opacity: 0.75;
+  word-break: break-all;
+}
